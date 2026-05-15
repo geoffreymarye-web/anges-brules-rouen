@@ -131,7 +131,7 @@ export default function GamePage() {
           return (
             <div
               key={loc.id}
-              onClick={() => status === "unlocked" && router.push(`/game/etape-${loc.id}`)}
+              onClick={() => status === "unlocked" && router.push(`/game/${loc.id}`)}
               style={{
                 padding: "12px 16px",
                 borderRadius: 8,
