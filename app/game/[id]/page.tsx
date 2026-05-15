@@ -4,9 +4,10 @@ import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { getSession, completeStep, loadSessionId } from "@/lib/game/session";
 import { LOCATIONS } from "@/lib/game/locations";
+import ArSceneCathedrale from "../components/ArSceneCathedrale";
 
 const ANSWERS: Record<number, string> = {
-  1: "BEAUVOISINE",
+  1: "SQUARE VERDREL",
   2: "CHU",
   3: "SAINT-VIVIEN",
   4: "1987",
@@ -41,7 +42,7 @@ export default function EtapePage() {
 
   async function handleValidate() {
     const expected = ANSWERS[stepId];
-    if (answer.trim().toUpperCase() !== expected) {
+    if (answer.trim().toUpperCase().replace(/\s+/g, " ") !== expected.toUpperCase().replace(/\s+/g, " ")) {
       setError("Mauvaise réponse. Cherchez encore.");
       return;
     }
@@ -62,20 +63,28 @@ export default function EtapePage() {
         <div style={{ fontSize: 13, color: "#888", marginBottom: 4 }}>Étape {stepId} / 10</div>
         <h1 style={{ fontSize: 22, fontWeight: 500, margin: 0 }}>{location.name}</h1>
       </div>
-      <div style={{
-        background: "#f3f4f6",
-        borderRadius: 12,
-        padding: 20,
-        marginBottom: 20,
-        minHeight: 200,
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        color: "#888",
-        fontSize: 14,
-      }}>
-        Scène AR — étape {stepId} (Sprint 2)
-      </div>
+
+      {stepId === 1 ? (
+        <div style={{ marginBottom: 20 }}>
+          <ArSceneCathedrale />
+        </div>
+      ) : (
+        <div style={{
+          background: "#f3f4f6",
+          borderRadius: 12,
+          padding: 20,
+          marginBottom: 20,
+          minHeight: 200,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          color: "#888",
+          fontSize: 14,
+        }}>
+          Scène AR — étape {stepId} (Sprint 2)
+        </div>
+      )}
+
       {!done ? (
         <>
           <input
